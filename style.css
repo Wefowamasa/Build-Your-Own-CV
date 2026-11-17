@@ -1,0 +1,85 @@
+:root{--bg:#f3f5f4;--panel:#fff;--ink:#1c2a27;--mute:#5d6b67;--line:#d8dfdc;--brand:#0f6b5c;--paper:#fff;--paperink:#222;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121816;--panel:#1b2421;--ink:#e6eeeb;--mute:#9aaba5;--line:#2f3d38;--brand:#3fb59f}}
+:root[data-theme="dark"]{--bg:#121816;--panel:#1b2421;--ink:#e6eeeb;--mute:#9aaba5;--line:#2f3d38;--brand:#3fb59f}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Trebuchet MS",Verdana,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+h1{font:700 20px Georgia,serif;margin:0}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,select,input[type=color]{font:inherit}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:6px;padding:8px 14px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+main{display:grid;grid-template-columns:minmax(300px,440px) 1fr;gap:20px;padding:20px;max-width:1300px;margin:auto}
+@media(max-width:860px){main{grid-template-columns:1fr}}
+.editor section{background:var(--panel);border:1px solid var(--line);border-radius:8px;margin-bottom:12px;padding:14px}
+.editor h2{font:700 16px Georgia,serif;margin:0 0 10px}
+label{display:block;font-size:13px;color:var(--mute);margin:8px 0 2px}
+input[type=text],input[type=email],input[type=tel],textarea,select{width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.item{border:1px dashed var(--line);border-radius:6px;padding:10px;margin-bottom:10px}
+.item .x{float:right;background:none;border:0;color:#c0392b;cursor:pointer}
+.hint{font-size:12px;color:var(--mute);margin:4px 0 0}
+.preview-wrap{overflow:auto}
+#cv{background:var(--paper);color:var(--paperink);width:100%;max-width:794px;min-height:1000px;margin:0 auto;padding:44px 48px;box-shadow:0 2px 14px rgba(0,0,0,.18);font:13.5px/1.5 Georgia,serif}
+#cv h1{font:700 30px Georgia,serif;margin:0;color:var(--accent)}
+#cv .title{font-size:15px;margin:2px 0 8px;color:#444}
+#cv .contact{font-size:12.5px;color:#444;display:flex;flex-wrap:wrap;gap:4px 14px}
+#cv h3{font:700 13px Georgia,serif;letter-spacing:.04em;margin:18px 0 6px;padding-bottom:3px;border-bottom:2px solid var(--accent);color:var(--accent)}
+#cv .e{margin-bottom:9px;break-inside:avoid}
+#cv .eh{display:flex;justify-content:space-between;gap:10px;font-weight:700}
+#cv .eh span:last-child{font-weight:400;color:#555;white-space:nowrap}
+#cv .sub{color:#444;font-style:italic}
+#cv p{margin:3px 0;white-space:pre-wrap}
+#cv .skills{display:flex;flex-wrap:wrap;gap:6px}
+#cv .skills span{border:1px solid var(--accent);border-radius:12px;padding:1px 10px;font-size:12.5px}
+#cv .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+#cv .hd>div{flex:1}
+#cv .photo{width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);flex:none}
+#cv.classic .photo{border-radius:4px}
+.ph{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.ph img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:1px solid var(--line)}
+#cv.modern{font-family:"Trebuchet MS",Verdana,sans-serif}
+#cv.modern h1,#cv.modern h3{font-family:"Trebuchet MS",Verdana,sans-serif}
+#cv.modern h3{border:0;background:var(--accent);color:#fff;padding:3px 8px}
+#cv.classic h1{text-align:center;color:#111}
+#cv.classic .title,#cv.classic .contact{justify-content:center;text-align:center}
+#cv.classic h3{color:#111;border-bottom:1px solid #111}
+#cv.classic .skills span{border-color:#111}
+@media print{
+ header,.editor{display:none!important}
+ body{background:#fff}main{display:block;padding:0}
+ #cv{box-shadow:none;padding:0;max-width:none;min-height:0}
+}
+
+/* Blue sidebar style */
+#cv.sidebar{padding:0;font:13px/1.5 "Trebuchet MS",Verdana,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow:hidden}
+#cv.sidebar .banner{background:var(--accent);color:#fff;padding:28px 26px}
+#cv.sidebar h1{color:#fff;font:700 38px "Trebuchet MS",Verdana,sans-serif}
+#cv.sidebar .title{color:#fff;font-size:21px;font-weight:300;margin:2px 0 0}
+#cv.sidebar .cols{display:grid;grid-template-columns:1fr 250px;min-height:900px}
+#cv.sidebar .main,#cv.sidebar .side{padding:22px 24px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#cv.sidebar .side{background:#f3f3f3;padding-left:22px;padding-right:22px}
+#cv.sidebar h3{font:700 19px "Trebuchet MS",Verdana,sans-serif;letter-spacing:0;color:var(--accent);background:none;border-bottom:1px solid #d5d5d5;padding:0 0 4px;margin:20px 0 10px}
+#cv.sidebar .side h3:first-child,#cv.sidebar .main h3:first-child{margin-top:0}
+#cv.sidebar .photo{width:100%;height:auto;aspect-ratio:1;border-radius:0;border:0;display:block;margin-bottom:6px}
+#cv.sidebar .lb{font-weight:700;margin-top:6px}
+#cv.sidebar .val{word-break:break-word;margin-top:4px}
+#cv.sidebar .lv{text-align:right;color:#555;font-size:12px}
+#cv.sidebar .dots{margin:0;flex:none;white-space:nowrap}
+#cv.sidebar .sk{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:7px 0 2px}
+#cv.sidebar .sk .val{margin:0}
+#cv.sidebar .d{display:inline-block;width:12px;height:12px;border-radius:50%;background:#dcdcdc;margin-right:3px}
+#cv.sidebar .d.on{background:var(--accent)}
+#cv.sidebar .r2{display:grid;grid-template-columns:86px 1fr;gap:0 14px;margin-bottom:12px;break-inside:avoid}
+#cv.sidebar .dt{font-weight:700;font-size:12px;color:#444}
+#cv.sidebar .et{font-weight:700;font-size:15px}
+#cv.sidebar .eo{font-style:italic;color:#444}
+#cv.sidebar ul{margin:4px 0 0;padding-left:18px}
+#cv.sidebar li{margin-bottom:2px}
+@media(max-width:640px){#cv.sidebar .cols{grid-template-columns:1fr}#cv.sidebar{min-width:0}}
+
+#cv .sp{height:9px}

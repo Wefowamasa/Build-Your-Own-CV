@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Free CV Builder</title>
+<style>
+:root{--bg:#f3f5f4;--panel:#fff;--ink:#1c2a27;--mute:#5d6b67;--line:#d8dfdc;--brand:#0f6b5c;--paper:#fff;--paperink:#222;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121816;--panel:#1b2421;--ink:#e6eeeb;--mute:#9aaba5;--line:#2f3d38;--brand:#3fb59f}}
+:root[data-theme="dark"]{--bg:#121816;--panel:#1b2421;--ink:#e6eeeb;--mute:#9aaba5;--line:#2f3d38;--brand:#3fb59f}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Trebuchet MS",Verdana,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+h1{font:700 20px Georgia,serif;margin:0}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,select,input[type=color]{font:inherit}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:6px;padding:8px 14px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+main{display:grid;grid-template-columns:minmax(300px,440px) 1fr;gap:20px;padding:20px;max-width:1300px;margin:auto}
+@media(max-width:860px){main{grid-template-columns:1fr}}
+.editor section{background:var(--panel);border:1px solid var(--line);border-radius:8px;margin-bottom:12px;padding:14px}
+.editor h2{font:700 16px Georgia,serif;margin:0 0 10px}
+label{display:block;font-size:13px;color:var(--mute);margin:8px 0 2px}
+input[type=text],input[type=email],input[type=tel],textarea,select{width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.item{border:1px dashed var(--line);border-radius:6px;padding:10px;margin-bottom:10px}
+.item .x{float:right;background:none;border:0;color:#c0392b;cursor:pointer}
+.hint{font-size:12px;color:var(--mute);margin:4px 0 0}
+.preview-wrap{overflow:auto}
+#cv{background:var(--paper);color:var(--paperink);width:100%;max-width:794px;min-height:1000px;margin:0 auto;padding:44px 48px;box-shadow:0 2px 14px rgba(0,0,0,.18);font:13.5px/1.5 Georgia,serif}
+#cv h1{font:700 30px Georgia,serif;margin:0;color:var(--accent)}
+#cv .title{font-size:15px;margin:2px 0 8px;color:#444}
+#cv .contact{font-size:12.5px;color:#444;display:flex;flex-wrap:wrap;gap:4px 14px}
+#cv h3{font:700 13px Georgia,serif;letter-spacing:.04em;margin:18px 0 6px;padding-bottom:3px;border-bottom:2px solid var(--accent);color:var(--accent)}
+#cv .e{margin-bottom:9px;break-inside:avoid}
+#cv .eh{display:flex;justify-content:space-between;gap:10px;font-weight:700}
+#cv .eh span:last-child{font-weight:400;color:#555;white-space:nowrap}
+#cv .sub{color:#444;font-style:italic}
+#cv p{margin:3px 0;white-space:pre-wrap}
+#cv .skills{display:flex;flex-wrap:wrap;gap:6px}
+#cv .skills span{border:1px solid var(--accent);border-radius:12px;padding:1px 10px;font-size:12.5px}
+#cv .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+#cv .hd>div{flex:1}
+#cv .photo{width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);flex:none}
+#cv.classic .photo{border-radius:4px}
+.ph{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.ph img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:1px solid var(--line)}
+#cv.modern{font-family:"Trebuchet MS",Verdana,sans-serif}
+#cv.modern h1,#cv.modern h3{font-family:"Trebuchet MS",Verdana,sans-serif}
+#cv.modern h3{border:0;background:var(--accent);color:#fff;padding:3px 8px}
+#cv.classic h1{text-align:center;color:#111}
+#cv.classic .title,#cv.classic .contact{justify-content:center;text-align:center}
+#cv.classic h3{color:#111;border-bottom:1px solid #111}
+#cv.classic .skills span{border-color:#111}
+@media print{
+ header,.editor{display:none!important}
+ body{background:#fff}main{display:block;padding:0}
+ #cv{box-shadow:none;padding:0;max-width:none;min-height:0}
+}
+
+/* Blue sidebar style */
+#cv.sidebar{padding:0;font:13px/1.5 "Trebuchet MS",Verdana,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow:hidden}
+#cv.sidebar .banner{background:var(--accent);color:#fff;padding:28px 26px}
+#cv.sidebar h1{color:#fff;font:700 38px "Trebuchet MS",Verdana,sans-serif}
+#cv.sidebar .title{color:#fff;font-size:21px;font-weight:300;margin:2px 0 0}
+#cv.sidebar .cols{display:grid;grid-template-columns:1fr 250px;min-height:900px}
+#cv.sidebar .main,#cv.sidebar .side{padding:22px 24px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#cv.sidebar .side{background:#f3f3f3;padding-left:22px;padding-right:22px}
+#cv.sidebar h3{font:700 19px "Trebuchet MS",Verdana,sans-serif;letter-spacing:0;color:var(--accent);background:none;border-bottom:1px solid #d5d5d5;padding:0 0 4px;margin:20px 0 10px}
+#cv.sidebar .side h3:first-child,#cv.sidebar .main h3:first-child{margin-top:0}
+#cv.sidebar .photo{width:100%;height:auto;aspect-ratio:1;border-radius:0;border:0;display:block;margin-bottom:6px}
+#cv.sidebar .lb{font-weight:700;margin-top:6px}
+#cv.sidebar .val{word-break:break-word;margin-top:4px}
+#cv.sidebar .lv{text-align:right;color:#555;font-size:12px}
+#cv.sidebar .dots{margin:0;flex:none;white-space:nowrap}
+#cv.sidebar .sk{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:7px 0 2px}
+#cv.sidebar .sk .val{margin:0}
+#cv.sidebar .d{display:inline-block;width:12px;height:12px;border-radius:50%;background:#dcdcdc;margin-right:3px}
+#cv.sidebar .d.on{background:var(--accent)}
+#cv.sidebar .r2{display:grid;grid-template-columns:86px 1fr;gap:0 14px;margin-bottom:12px;break-inside:avoid}
+#cv.sidebar .dt{font-weight:700;font-size:12px;color:#444}
+#cv.sidebar .et{font-weight:700;font-size:15px}
+#cv.sidebar .eo{font-style:italic;color:#444}
+#cv.sidebar ul{margin:4px 0 0;padding-left:18px}
+#cv.sidebar li{margin-bottom:2px}
+@media(max-width:640px){#cv.sidebar .cols{grid-template-columns:1fr}#cv.sidebar{min-width:0}}
+
+#cv .sp{height:9px}
+</style>
+</head>
+<body>
+<header>
+ <h1>Free CV Builder</h1>
+ <div class="bar">
+  <label style="margin:0">Style
+   <select id="tpl"><option value="">Traditional</option><option value="modern">Modern</option><option value="classic">Classic</option><option value="sidebar">Blue sidebar</option></select></label>
+  <label style="margin:0">Colour <input type="color" id="accent" value="#0f6b5c" aria-label="Accent colour"></label>
+  <button class="btn alt" id="clear">Start over</button>
+  <button class="btn" id="print">Save as PDF / Print</button>
+ </div>
+</header>
+<main>
+ <div class="editor">
+  <section><h2>About you</h2>
+   <div class="ph"><img id="phimg" alt="" hidden><label class="btn alt" style="margin:0;cursor:pointer;color:var(--ink)">Add photo<input type="file" id="photo" accept="image/*" hidden></label><button class="btn alt" id="phrm" hidden>Remove photo</button></div>
+   <label for="name">Full name</label><input type="text" id="name">
+   <label for="role">Job title you want</label><input type="text" id="role">
+   <div class="row"><div><label for="email">Email</label><input type="email" id="email"></div><div><label for="phone">Phone</label><input type="tel" id="phone"></div></div>
+   <label for="loc">Town / city</label><input type="text" id="loc">
+   <label for="link">Links, one per line (optional)</label><textarea id="link" style="min-height:50px"></textarea>
+  </section>
+  <section><h2>Profile</h2>
+   <textarea id="summary" aria-label="Profile summary"></textarea>
+   <p class="hint">Two or three sentences: who you are, what you do well, what you want next.</p>
+  </section>
+  <section><h2>Work experience</h2><div id="exp"></div><button class="btn alt" data-add="exp">Add job</button></section>
+  <section><h2>Education</h2><div id="edu"></div><button class="btn alt" data-add="edu">Add qualification</button></section>
+  <section><h2>Skills</h2>
+   <textarea id="skills" aria-label="Skills"></textarea><p class="hint">One skill per line. Leave a blank line for a space. Add a rating out of 5 after a bar, like: C# | 4 (shown as dots on the right).</p></section>
+  <section><h2>Languages</h2>
+   <textarea id="langs" aria-label="Languages"></textarea><p class="hint">One language per line, like: English | 4 | Intermediate (B1). The level shows under the dots.</p></section>
+  <section><h2>Hobbies and interests</h2>
+   <textarea id="hobbies" aria-label="Hobbies"></textarea><p class="hint">One per line, or separated by commas.</p></section>
+  <section><h2>References</h2>
+   <textarea id="refs" aria-label="References"></textarea><p class="hint">Name, company, phone. Or write "Available on request".</p></section>
+ </div>
+ <div class="preview-wrap"><article id="cv" aria-label="CV preview"></article></div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const F=['name','role','email','phone','loc','link','summary','skills','langs','hobbies','refs'];
+const blank={exp:[{a:'',b:'',c:'',d:'',e:''}],edu:[{a:'',b:'',c:'',d:'',e:''}]};
+const sample={name:'Thandi Mokoena',role:'Administrative Assistant',email:'thandi@example.com',phone:'082 000 0000',loc:'Benoni, Gauteng',link:'linkedin.com/in/thandi-mokoena',
+summary:'Organised and reliable assistant with three years of office experience. Quick to learn and comfortable with deadlines.',
+skills:'Customer service | 4, MS Office | 4, Data capture | 3, Filing | 5',langs:'English | 5 | Fluent, Zulu | 5 | Home language, Afrikaans | 3 | Intermediate',hobbies:'Reading, Netball, Volunteering',refs:'Available on request',
+exp:[{a:'Office Assistant',b:'ABC Trading, Benoni',c:'2022-01',d:'Present',e:'- Answered phones and emails for a busy office, passing messages on\nthe same day.\n- Captured invoices and kept records up to date'}],
+edu:[{a:'National Senior Certificate',b:'Benoni High School',c:'2017',d:'2021',e:'Distinction in Business Studies'}],tpl:'sidebar',accent:'#10287a'};
+let S=Object.assign({hobbies:'',photo:'',tpl:'',accent:'#0f6b5c'},load()||JSON.parse(JSON.stringify(sample)));
+const pg=document.createElement('style');document.head.appendChild(pg);
+function load(){try{const v=localStorage.getItem('cv-data-v2');return v?JSON.parse(v):null}catch(e){return null}}
+function save(){try{localStorage.setItem('cv-data-v2',JSON.stringify(S))}catch(e){}}
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const list=t=>{const s=t||'',nl=/\n/.test(s.trim()),out=[];
+ (nl?s.split('\n'):s.split(',')).forEach(x=>{const q=x.trim();
+  if(!q){if(nl&&out.length&&!out[out.length-1].sp)out.push({sp:1});return}
+  const p=q.split('|').map(y=>y.trim());out.push({n:p[0],r:Math.min(5,parseInt(p[1])||0),l:p[2]||''})});
+ while(out.length&&out[out.length-1].sp)out.pop();return out};
+const SP='<div class="sp"></div>';
+const dots=n=>n?`<div class="dots">${[1,2,3,4,5].map(i=>`<i class="d${i<=n?' on':''}"></i>`).join('')}</div>`:'';
+function items(key){
+ const box=$(key);box.innerHTML='';
+ const L=key==='exp'?['Job title','Employer','Start','End','What you did (- for a bullet, Enter for a new line, blank line for a space)']:['Qualification','School / college','Start','End','Notes (- for a bullet, Enter for a new line, blank line for a space)'];
+ S[key].forEach((it,i)=>{
+  const d=document.createElement('div');d.className='item';
+  d.innerHTML=`<button class="x" aria-label="Remove">Remove</button>
+  <label>${L[0]}</label><input type="text" data-k="a" value="${esc(it.a)}">
+  <label>${L[1]}</label><input type="text" data-k="b" value="${esc(it.b)}">
+  <div class="row"><div><label>${L[2]}</label><input type="text" data-k="c" value="${esc(it.c)}"></div><div><label>${L[3]}</label><input type="text" data-k="d" value="${esc(it.d)}"></div></div>
+  <label>${L[4]}</label><textarea data-k="e">${esc(it.e)}</textarea>`;
+  d.querySelectorAll('[data-k]').forEach(inp=>inp.addEventListener('input',()=>{S[key][i][inp.dataset.k]=inp.value;render()}));
+  d.querySelector('.x').addEventListener('click',()=>{S[key].splice(i,1);items(key);render()});
+  box.appendChild(d);
+ });
+}
+function entries(l){
+ return l.filter(x=>x.a||x.b).map(x=>`<div class="e"><div class="eh"><span>${esc(x.a)}</span><span>${esc([x.c,x.d].filter(Boolean).join(' – '))}</span></div>${x.b?`<div class="sub">${esc(x.b)}</div>`:''}${x.e?`<p>${esc(x.e)}</p>`:''}</div>`).join('');
+}
+const bullets=e=>{const bl=[];let cur=null;
+ (e||'').split('\n').forEach(r=>{const t=r.trim();
+  if(!t){if(bl.length&&bl[bl.length-1].k!=='s')bl.push({k:'s'});cur=null;return}
+  const m=t.match(/^(?:[•*]\s*|-\s+)(.*)$/);
+  if(m){cur={k:'li',l:[m[1]]};bl.push(cur)}
+  else if(cur)cur.l.push(t);
+  else{cur={k:'p',l:[t]};bl.push(cur)}});
+ while(bl.length&&bl[bl.length-1].k==='s')bl.pop();
+ let h='',ul='';const fl=()=>{if(ul){h+=`<ul>${ul}</ul>`;ul=''}};
+ bl.forEach(b=>{const s=b.l?b.l.map(esc).join('<br>'):'';
+  if(b.k==='li')ul+=`<li>${s}</li>`;else{fl();h+=b.k==='s'?'<div class="sp"></div>':`<p>${s}</p>`}});
+ fl();return h};
+function entries2(l){
+ return l.filter(x=>x.a||x.b).map(x=>`<div class="r2"><div class="dt">${esc([x.c,x.d].filter(Boolean).join(' – '))}</div><div><div class="et">${esc(x.a)}</div>${x.b?`<div class="eo">${esc(x.b)}</div>`:''}${bullets(x.e)}</div></div>`).join('');
+}
+function sec(t,h){return h?`<h3>${t}</h3>${h}`:''}
+function renderSide(cv){
+ const sk=list(S.skills),lg=list(S.langs),hb=list(S.hobbies);
+ const links=(S.link||'').split('\n').map(x=>x.trim()).filter(Boolean);
+ const ct=[['Address',S.loc],['Phone',S.phone],['E-mail',S.email]].filter(x=>x[1]).map(x=>`<div class="lb">${x[0]}</div><div class="val">${esc(x[1])}</div>`).join('');
+ const side=(S.photo?`<img class="photo" src="${S.photo}" alt="Profile photo">`:'')+
+  sec('Contact',ct)+
+  sec('Links',links.map(l=>`<div class="val">${esc(l)}</div>`).join(''))+
+  sec('Skills',sk.map(s=>s.sp?SP:`<div class="sk"><span class="val">${esc(s.n)}</span>${dots(s.r)}</div>`).join(''))+
+  sec('Languages',lg.map(s=>s.sp?SP:`<div class="sk"><span class="val">${esc(s.n)}</span>${dots(s.r)}</div>${s.l?`<div class="lv">${esc(s.l)}</div>`:''}`).join(''));
+ const main=(S.summary?`<p>${esc(S.summary)}</p>`:'')+
+  sec('Education',entries2(S.edu))+
+  sec('Hobbies and interests',hb.map(h=>h.sp?SP:`<div class="r2"><div></div><div>${esc(h.n)}</div></div>`).join(''))+
+  sec('Experience',entries2(S.exp))+
+  sec('References',S.refs?`<p>${esc(S.refs)}</p>`:'');
+ cv.innerHTML=`<div class="banner"><h1>${esc(S.name)||'Your name'}</h1>${S.role?`<div class="title">${esc(S.role)}</div>`:''}</div><div class="cols"><div class="main">${main}</div><aside class="side">${side}</aside></div>`;
+}
+function render(){
+ const cv=$('cv');cv.className=S.tpl||'';cv.style.setProperty('--accent',S.accent);
+ $('phimg').hidden=$('phrm').hidden=!S.photo;if(S.photo)$('phimg').src=S.photo;
+ pg.textContent='@page{margin:'+(S.tpl==='sidebar'?'0':'16mm')+'}';
+ if(S.tpl==='sidebar'){renderSide(cv);save();return}
+ const contact=[S.email,S.phone,S.loc].concat((S.link||'').split('\n')).map(x=>x.trim()).filter(Boolean).map(x=>`<span>${esc(x)}</span>`).join('');
+ const sk=list(S.skills).filter(s=>!s.sp).map(s=>`<span>${esc(s.n)}</span>`).join('');
+ const lg=list(S.langs).filter(s=>!s.sp).map(s=>s.n+(s.l?` (${s.l})`:'')).join(', ');
+ const hb=list(S.hobbies).filter(s=>!s.sp).map(s=>s.n).join(', ');
+ cv.innerHTML=`<div class="hd"><div><h1>${esc(S.name)||'Your name'}</h1>${S.role?`<div class="title">${esc(S.role)}</div>`:''}<div class="contact">${contact}</div></div>${S.photo?`<img class="photo" src="${S.photo}" alt="Profile photo">`:''}</div>`+
+ sec('PROFILE',S.summary?`<p>${esc(S.summary)}</p>`:'')+
+ sec('WORK EXPERIENCE',entries(S.exp))+
+ sec('EDUCATION',entries(S.edu))+
+ sec('SKILLS',sk?`<div class="skills">${sk}</div>`:'')+
+ sec('LANGUAGES',lg?`<p>${esc(lg)}</p>`:'')+
+ sec('HOBBIES AND INTERESTS',hb?`<p>${esc(hb)}</p>`:'')+
+ sec('REFERENCES',S.refs?`<p>${esc(S.refs)}</p>`:'');
+ save();
+}
+function fill(){
+ F.forEach(k=>{$(k).value=S[k]||''});
+ $('tpl').value=S.tpl||'';$('accent').value=S.accent||'#0f6b5c';
+ items('exp');items('edu');render();
+}
+F.forEach(k=>$(k).addEventListener('input',e=>{S[k]=e.target.value;render()}));
+$('tpl').addEventListener('change',e=>{S.tpl=e.target.value;if(S.tpl==='sidebar'&&S.accent==='#0f6b5c'){S.accent='#10287a';$('accent').value=S.accent}render()});
+$('accent').addEventListener('input',e=>{S.accent=e.target.value;render()});
+document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.add;S[k].push({a:'',b:'',c:'',d:'',e:''});items(k)}));
+$('clear').addEventListener('click',()=>{if(confirm('Clear everything and start with an empty CV?')){S={...JSON.parse(JSON.stringify(blank)),tpl:S.tpl,accent:S.accent,photo:''};F.forEach(k=>S[k]='');fill()}});
+$('photo').addEventListener('change',e=>{
+ const f=e.target.files[0];if(!f)return;
+ const img=new Image(),u=URL.createObjectURL(f);
+ img.onload=()=>{const n=Math.min(img.width,img.height),c=document.createElement('canvas');c.width=c.height=320;
+  c.getContext('2d').drawImage(img,(img.width-n)/2,(img.height-n)/2,n,n,0,0,320,320);
+  S.photo=c.toDataURL('image/jpeg',.85);URL.revokeObjectURL(u);render()};
+ img.src=u;e.target.value=''});
+$('phrm').addEventListener('click',()=>{S.photo='';render()});
+$('print').addEventListener('click',()=>window.print());
+fill();
+</script>
+</body>
+</html>
