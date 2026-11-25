@@ -4,44 +4,57 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Free CV Builder</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 <header>
  <h1>Free CV Builder</h1>
  <div class="bar">
   <label style="margin:0">Style
-   <select id="tpl"><option value="">Traditional</option><option value="modern">Modern</option><option value="classic">Classic</option></select></label>
+   <select id="tpl"><option value="">Traditional</option><option value="modern">Modern</option><option value="classic">Classic</option><option value="sidebar">Blue sidebar</option></select></label>
   <label style="margin:0">Colour <input type="color" id="accent" value="#0f6b5c" aria-label="Accent colour"></label>
-  <button class="btn alt" id="clear">Start over</button>
-  <button class="btn" id="print">Save as PDF / Print</button>
+  <button class="btn alt" id="clear">New / Open</button>
+  <button class="btn alt" id="savef">Save CV (PDF)</button>
+  <button class="btn" id="print">Print</button>
  </div>
 </header>
 <main>
  <div class="editor">
-  <section><h2>About you</h2>
+  <div class="xbar"><button class="btn alt" id="xall">Expand all</button><button class="btn alt" id="call">Collapse all</button></div>
+  <details class="sec" open><summary>About you</summary><div class="body">
    <div class="ph"><img id="phimg" alt="" hidden><label class="btn alt" style="margin:0;cursor:pointer;color:var(--ink)">Add photo<input type="file" id="photo" accept="image/*" hidden></label><button class="btn alt" id="phrm" hidden>Remove photo</button></div>
    <label for="name">Full name</label><input type="text" id="name">
    <label for="role">Job title you want</label><input type="text" id="role">
    <div class="row"><div><label for="email">Email</label><input type="email" id="email"></div><div><label for="phone">Phone</label><input type="tel" id="phone"></div></div>
    <label for="loc">Town / city</label><input type="text" id="loc">
-   <label for="link">Website or LinkedIn (optional)</label><input type="text" id="link">
-  </section>
-  <section><h2>Profile</h2>
+   <label for="link">Links, one per line (optional)</label><textarea id="link" style="min-height:50px"></textarea>
+  </div></details>
+  <details class="sec"><summary>Profile</summary><div class="body">
    <textarea id="summary" aria-label="Profile summary"></textarea>
    <p class="hint">Two or three sentences: who you are, what you do well, what you want next.</p>
-  </section>
-  <section><h2>Work experience</h2><div id="exp"></div><button class="btn alt" data-add="exp">Add job</button></section>
-  <section><h2>Education</h2><div id="edu"></div><button class="btn alt" data-add="edu">Add qualification</button></section>
-  <section><h2>Skills</h2>
-   <textarea id="skills" aria-label="Skills"></textarea><p class="hint">Separate with commas.</p></section>
-  <section><h2>Languages</h2>
-   <textarea id="langs" aria-label="Languages"></textarea><p class="hint">For example: English (fluent), Zulu (home language).</p></section>
-  <section><h2>References</h2>
-   <textarea id="refs" aria-label="References"></textarea><p class="hint">Name, company, phone. Or write "Available on request".</p></section>
+  </div></details>
+  <details class="sec"><summary>Work experience</summary><div class="body"><div id="exp"></div><button class="btn alt" data-add="exp">Add job</button></div></details>
+  <details class="sec"><summary>Education</summary><div class="body"><div id="edu"></div><button class="btn alt" data-add="edu">Add qualification</button></div></details>
+  <details class="sec"><summary>Skills</summary><div class="body">
+   <textarea id="skills" aria-label="Skills"></textarea><p class="hint">One skill per line. Leave a blank line for a space. Add a rating out of 5 after a bar, like: C# | 4 (shown as dots on the right).</p></div></details>
+  <details class="sec"><summary>Languages</summary><div class="body">
+   <textarea id="langs" aria-label="Languages"></textarea><p class="hint">One language per line, like: English | 4 | Intermediate (B1). The level shows under the dots.</p></div></details>
+  <details class="sec"><summary>Hobbies and interests</summary><div class="body">
+   <textarea id="hobbies" aria-label="Hobbies"></textarea><p class="hint">One per line, or separated by commas.</p></div></details>
+  <details class="sec"><summary>References</summary><div class="body">
+   <textarea id="refs" aria-label="References"></textarea><p class="hint">Name, company, phone. Or write "Available on request".</p></div></details>
  </div>
  <div class="preview-wrap"><article id="cv" aria-label="CV preview"></article></div>
 </main>
-<script src="script.js"></script>
+<div id="start" class="ov" role="dialog" aria-modal="true" aria-labelledby="st-t"><div class="card">
+ <h2 id="st-t">Free CV Builder</h2><p style="margin:0">How would you like to begin?</p>
+ <button class="btn big" id="st-new">Start a new CV</button>
+ <label class="btn big alt" style="cursor:pointer">Upload a saved CV (PDF)<input type="file" id="st-file" accept=".pdf,.json,application/pdf,application/json" hidden></label>
+ <button class="btn big alt" id="st-cont" hidden>Continue editing my CV</button>
+ <button class="lnk" id="st-ex">See an example CV</button>
+ <p class="hint">Upload opens PDFs saved from this builder. Use "Save CV (PDF)" at the top to make one.</p>
+ <p class="err" id="st-err" role="alert"></p>
+</div></div>
+<script src="script.js?v=7"></script>
 </body>
 </html>

@@ -50,8 +50,57 @@ textarea{min-height:70px;resize:vertical}
 #cv.classic h3{color:#111;border-bottom:1px solid #111}
 #cv.classic .skills span{border-color:#111}
 @media print{
+ #start,.xbar{display:none!important}
  header,.editor{display:none!important}
  body{background:#fff}main{display:block;padding:0}
  #cv{box-shadow:none;padding:0;max-width:none;min-height:0}
- @page{margin:16mm}
 }
+
+/* Blue sidebar style */
+#cv.sidebar{padding:0;font:13px/1.5 "Trebuchet MS",Verdana,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow:hidden}
+#cv.sidebar .banner{background:var(--accent);color:#fff;padding:28px 26px}
+#cv.sidebar h1{color:#fff;font:700 38px "Trebuchet MS",Verdana,sans-serif}
+#cv.sidebar .title{color:#fff;font-size:21px;font-weight:300;margin:2px 0 0}
+#cv.sidebar .cols{display:grid;grid-template-columns:1fr 250px;min-height:900px}
+#cv.sidebar .main,#cv.sidebar .side{padding:22px 24px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+#cv.sidebar .side{background:#f3f3f3;padding-left:22px;padding-right:22px}
+#cv.sidebar h3{font:700 19px "Trebuchet MS",Verdana,sans-serif;letter-spacing:0;color:var(--accent);background:none;border-bottom:1px solid #d5d5d5;padding:0 0 4px;margin:20px 0 10px}
+#cv.sidebar .side h3:first-child,#cv.sidebar .main h3:first-child{margin-top:0}
+#cv.sidebar .photo{width:100%;height:auto;aspect-ratio:1;border-radius:0;border:0;display:block;margin-bottom:6px}
+#cv.sidebar .lb{font-weight:700;margin-top:6px}
+#cv.sidebar .val{word-break:break-word;margin-top:4px}
+#cv.sidebar .lv{text-align:right;color:#555;font-size:12px}
+#cv.sidebar .dots{margin:0;flex:none;white-space:nowrap}
+#cv.sidebar .sk{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:7px 0 2px}
+#cv.sidebar .sk .val{margin:0}
+#cv.sidebar .d{display:inline-block;width:12px;height:12px;border-radius:50%;background:#dcdcdc;margin-right:3px}
+#cv.sidebar .d.on{background:var(--accent)}
+#cv.sidebar .r2{display:grid;grid-template-columns:86px 1fr;gap:0 14px;margin-bottom:12px;break-inside:avoid}
+#cv.sidebar .dt{font-weight:700;font-size:12px;color:#444}
+#cv.sidebar .et{font-weight:700;font-size:15px}
+#cv.sidebar .eo{font-style:italic;color:#444}
+#cv.sidebar ul{margin:4px 0 0;padding-left:18px}
+#cv.sidebar li{margin-bottom:2px}
+@media(max-width:640px){#cv.sidebar .cols{grid-template-columns:1fr}#cv.sidebar{min-width:0}}
+
+#cv .sp{height:9px}
+
+/* Accordion sections */
+.editor details.sec{background:var(--panel);border:1px solid var(--line);border-radius:8px;margin-bottom:8px}
+.editor summary{list-style:none;cursor:pointer;padding:12px 14px;font:700 16px Georgia,serif;display:flex;justify-content:space-between;align-items:center}
+.editor summary::-webkit-details-marker{display:none}
+.editor summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:rotate(45deg);transition:transform .15s;margin-right:4px}
+.editor details[open]>summary::after{transform:rotate(-135deg);margin-top:5px}
+.editor details[open]>summary{border-bottom:1px solid var(--line)}
+.editor summary:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+.editor .body{padding:6px 14px 14px}
+.xbar{display:flex;gap:8px;margin-bottom:8px}
+.xbar .btn{padding:5px 10px;font-size:13px}
+/* Start screen */
+.ov{position:fixed;inset:0;background:rgba(10,20,18,.6);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+.ov[hidden]{display:none}
+.card{background:var(--panel);color:var(--ink);border-radius:12px;padding:26px;max-width:420px;width:100%;display:flex;flex-direction:column;gap:10px}
+.card h2{font:700 24px Georgia,serif;margin:0}
+.btn.big{padding:14px;font-size:16px;text-align:center;display:block}
+.lnk{background:none;border:0;color:var(--brand);text-decoration:underline;cursor:pointer;font:inherit}
+.err{color:#c0392b;min-height:1em;margin:0;font-size:13px}
